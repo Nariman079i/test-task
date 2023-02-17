@@ -1,3 +1,5 @@
+import sys
+import logging
 from time import sleep
 from keyboard import *
 
@@ -17,16 +19,15 @@ def liter_limit(liter:float,a:float,b:float):
         return 4
 
 class Teapot:
-    
     def __init__(self, liter:int=None,time_boiling=10):
         self.liter = liter 
         self.time_boiling = time_boiling / 2 #Время закипания
-        self.run()
+        
 
     def run(self):
         print()
         print("Сколько литров воды вы хотите налить в чайник")
-
+        print("Если захотите остановить чайник удерживайте 'A' eng")
         self.liter = float(input("( 0 - 1.0 ) :"))
 
         action = liter_limit(self.liter, 0, 1.0)
@@ -35,12 +36,26 @@ class Teapot:
             time = int(self.liter * self.time_boiling)
             print("Чайник вкл")
             t = 0
-            while t <= 100:
-                print(f"{int(t)}°")
-                t += self.time_boiling * 2
-                sleep((1.0 - (1.0-self.liter)))
-    
-            
+            while True:
+                try: 
+                    
+                    if is_pressed("a"):
+                        sys.exit()
+                    
+                    print(f"{int(t)}°")
+                    if t == 100.0:
+                        
+                        break
+                    t += self.time_boiling * 2
+                    
+                    sleep((1.0 - (1.0-self.liter)))
+                    
+
+                except:
+                    print("Чайник остановлен")   
+                    quit() 
+                    
+
             print("Чайник вскипел")
             print("Чайник выкл")
         elif action == 2:
@@ -60,4 +75,8 @@ class Teapot:
             print("Попробуйте ещё раз")
             return self.run()
 
+
 teapot1 = Teapot()
+
+if __name__ == '__main__':
+    teapot1.run()
