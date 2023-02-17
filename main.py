@@ -3,26 +3,27 @@ import logging
 from time import sleep
 from keyboard import *
 
-def liter_limit(liter:float,a:float,b:float):
+
+def liter_limit(liter: float, a: float, b: float):
     try:
         if a < liter <= b:
             return 1
 
-        elif liter < 0 :
+        elif liter < 0:
             return 2
 
-        elif liter==0:
+        elif liter == 0:
             return 3
         else:
             return 0
     except ValueError:
         return 4
 
+
 class Teapot:
-    def __init__(self, liter:int=None,time_boiling=10):
-        self.liter = liter 
-        self.time_boiling = time_boiling / 2 #Время закипания
-        
+    def __init__(self, liter: int = None, time_boiling=10):
+        self.liter = liter
+        self.time_boiling = time_boiling / 2  # Время закипания
 
     def run(self):
         print()
@@ -32,29 +33,25 @@ class Teapot:
 
         action = liter_limit(self.liter, 0, 1.0)
 
-        if action == 1 :
+        if action == 1:
             time = int(self.liter * self.time_boiling)
             print("Чайник вкл")
             t = 0
             while True:
-                try: 
-                    
+                try:
+
                     if is_pressed("a"):
                         sys.exit()
-                    
+
                     print(f"{int(t)}°")
                     if t == 100.0:
-                        
                         break
                     t += self.time_boiling * 2
-                    
-                    sleep((1.0 - (1.0-self.liter)))
-                    
 
+                    sleep((1.0 - (1.0 - self.liter)))
                 except:
-                    print("Чайник остановлен")   
-                    quit() 
-                    
+                    print("Чайник остановлен")
+                    quit()
 
             print("Чайник вскипел")
             print("Чайник выкл")
